@@ -23,7 +23,7 @@ int main (void){
         //printf("Looping em: %d\n", j); ta aqui por conta de um erro de logica
         for(int j = 0; j < colunas; j++){
             //printf("Looping em: %d\n", j); ta aqui por conta de um erro de logica
-            printf("Item a%d%d: ", i+1, j+1);
+            printf("Item a%d,%d: ", i+1, j+1);
             scanf("%f",&a[i][j]); //recebe o elemento e armazena na posição especifica da matriz
             printf("\n");
         }
@@ -59,25 +59,41 @@ int main (void){
         printf("Essa matriz é a matriz identidade\nE já está escalonada!");
         return 0;
     }*/
-    int matriz_escalonada = 0, b = 1;/*esse for para verificar se a matriz ja esta escalonada não funciona ainda
+   
+   /*esse for para verificar se a matriz ja esta escalonada não funciona ainda
     1 1 1 1
     1 0 1 1
     1 0 0 1 essa matriz foi verificada como escalonada*/
- for(int i = 0; i < linhas; i++){
+ int matriz_escalonada = 0, matriz_escalonada_vetor = 0;
+
+ float v[100]; //vetor para verificar matriz é escalonada
+ for(int k = 0; k < 100; k++) v[k] = 0; // deveria encher o vetor de 0 mas não faz
+ for(int f = 0; f < 100; f++) printf("%d", v[f] ); //mostra se o vetor estar cheio de zeros mas não ta amostrnado
+ /*consertar isso ai depois */
+/*esse bolo de for e if verifica se a matriz esta escalonada*/
+    for(int i = 0; i < linhas; i++){ //navega pela matriz
         for(int j = 0; j < colunas; j++){
-            if(i <= b && j <= b){
-                if (a[i][j] == 0) matriz_escalonada = 1;
+            if(i == j){ //verifica se o elemento é da diagonal
+                for(int b = 0; b < linhas; b++){ //navega por uma coluna especifica para verificar se os elementos são iguais a 0
+                    if(a[b][j] == 0) { // verifica se o elemento é igual a 0
+                       //matriz_escalonada = 1;
+                        v[b] = a[b][j]; 
+                        printf(" a[%d][%d] =%g\n ", b, j , a[b][j]); // mostra os elementos que apareceram
+                    } else v[b] = a[b][j]; //bota os elementos q não são 0 no vetor 
+                }
             }
-        
         }
-        b++;
     }
-    if(matriz_escalonada == 1){
+
+    for(int w = 0; w < 100; w++){ // verifica se a ,atriz esta escalonada
+        if (v[0] == 0 && v[0] == v[w]) matriz_escalonada_vetor = 1;
+    }
+
+    if(matriz_escalonada == 1 && matriz_escalonada_vetor == 1){ //printa se a matrris esta escalonada
         printf("Essa matriz ja esta escalonada!\n");
         return 0;
-    }
-    
-    
+    }else printf("Essa matriz não está escalonada!\n"); // printa se ela está.
+
     /*
     for(int i = 0; i < linhas; i++){
         for(int j = 0; j < colunas; j++){
