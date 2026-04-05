@@ -34,7 +34,26 @@ int matriz_nula = 0; //variavel controle que se falsa essa matriz é uma matriz 
     return matriz_nula;
 }
 
+void troca_linha(int linhas ,float a [linhas], float b[linhas]){
+    float temp;
+    for(int i = 0; i < linhas; i++){
+        temp = a[i];
+        a[i] = b[i];
+        b[i] = temp;
+    }
+}
 
+void mul_linha(int linhas,float a[linhas], float k){
+    for(int i = 0; i< linhas; i++){
+        a[i] = a[i]*k;
+    }
+}
+
+void sub_linha(int linhas ,float a [linhas], float b[linhas]){
+    for(int i = 0; i < linhas; i++){
+        a[i] = a[i] - b[i];
+    }
+}
 
 int main (void){
     unsigned int colunas = 1, linhas = 1;
@@ -65,26 +84,33 @@ int main (void){
         printf("Essa matriz é nula!\nE não pode ser escalonada.");
         return 0;
     }
-    float  verif[10] = {0,0,0,0,0,0,0,0,0,0};
-    for(int i = 0; i < 10; i++) printf("%g", verif[i]);
-    printf("\n");
-    /*int matriz_identidade = 0;
-    for(int i = 0; i < linhas; i++){
+if(a[0][0] == 0){
+    for (int i = 0; i < )
+}
+    //verficação da matriz
+    for (int i = 0; i   < linhas; i++){
         for(int j = 0; j < colunas; j++){
-            if((a[0][0] == 0 && a[0][0] == a[i][j] )|| (a[i][i] == 1 && a[2][0] == 0 && a[0][2] == 0) ) matriz_identidade = 1;
+            if(i == j){
+                for(int b = i + 1; b < linhas; b++){
+                    if (a[b][j] == 0){
+                        printf("escalonado matriz pivo a%d,%d nenhuma alteração feita na linha %d\n", i , j, b);
+                    }
+                }
+            }
         }
     }
-    if (matriz_identidade == 1){ //retorna para o usuario que a matriz é a a matris identidade.
-        printf("Essa matriz é a matriz identidade\nE já está escalonada!");
-        return 0;
-    }
-   esse for para verificar se a matriz ja esta escalonada não funciona ainda
-    1 1 1 1
-    1 0 1 1
-    1 0 0 1 essa matriz foi verificada como escalonada*/
+
+}
+
+
+
+
+
+
+   /*
  int matriz_escalonada = 0, matriz_escalonada_vetor = 0;
 
-/*esse bolo de for e if verifica se a matriz esta escalonada*/
+esse bolo de for e if verifica se a matriz esta escalonada
     for(int i = 0; i < linhas; i++){ //navega pela matriz
         for(int j = 0; j < colunas; j++){
             if(i == j){ //verifica se o elemento é da diagonal
@@ -112,14 +138,29 @@ int main (void){
         printf("Essa matriz ja esta escalonada!\n");
         return 0;
     }else printf("Essa matriz não está escalonada!\n"); // printa se ela está.
+*/
 
-    /*
+
+
+
+
+
+
+
+ /*
+ tava na linha 71
+ 
+ int matriz_identidade = 0;
     for(int i = 0; i < linhas; i++){
         for(int j = 0; j < colunas; j++){
-            
+            if((a[0][0] == 0 && a[0][0] == a[i][j] )|| (a[i][i] == 1 && a[2][0] == 0 && a[0][2] == 0) ) matriz_identidade = 1;
         }
-
-    }*/
-
-
-}
+    }
+    if (matriz_identidade == 1){ //retorna para o usuario que a matriz é a a matris identidade.
+        printf("Essa matriz é a matriz identidade\nE já está escalonada!");
+        return 0;
+    }
+   esse for para verificar se a matriz ja esta escalonada não funciona ainda
+    1 1 1 1
+    1 0 1 1
+    1 0 0 1 essa matriz foi verificada como escalonada*/
