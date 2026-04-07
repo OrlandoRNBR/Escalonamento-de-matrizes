@@ -57,9 +57,9 @@ void sub_linha(int linhas ,float a [linhas], float b[linhas]){
 
 int main (void){
     unsigned int colunas = 1, linhas = 1;
-/* unsigned int pois a matriz não pode ter colunas ou linhas negativas*/
+    /* unsigned int pois a matriz não pode ter colunas ou linhas negativas*/
 
-/*Recebe os valores de linhas e colunas*/
+    /*Recebe os valores de linhas e colunas*/
     puts("#Escalonamento de matrizes!#");
     puts("Qual é o tamanho da matriz?");
     printf("Tamanho da linha: ");//tamanho da linha
@@ -84,15 +84,22 @@ int main (void){
         printf("Essa matriz é nula!\nE não pode ser escalonada.");
         return 0;
     }
-if(a[0][0] == 0){
-    for (int i = 0; i < )
-}
+
+    int controle = 0;//variavel de controle para caso a primeira coluna seja completamente 0
+    if(a[0][0] == 0){ // se a [0][0] = 0  ele procura uma linha q seja diferente de 0 para trocar
+        for (int i = 1; i < linhas; i++){ //navega pela coluna
+            if (a[i][0] !=0 ){ // se achar um elemento diferente de 0 troca as linhas
+                troca_linha(linhas, a[i], a[0]);  //troca as linhas.
+            }  else if (a[0][0] == 0 && a[i][0] == a[0][0]) controle++; // se não achar a primera coluna inteira é 0 essa varivel vai ser usada para 
+                                                                                                            //somar nas proxima alaterações para ele não mecher nessa coluna.
+        }
+    }
     //verficação da matriz
-    for (int i = 0; i   < linhas; i++){
-        for(int j = 0; j < colunas; j++){
-            if(i == j){
-                for(int b = i + 1; b < linhas; b++){
-                    if (a[b][j] == 0){
+    for (int i = 0; i   < linhas; i++){//navega pelas linhas
+        for(int j = 0; j < colunas; j++){ //navega pelas colunas
+            if(i == j){ // se ele estiver olhando para o elemento da diagonal principal A mn ele execulta esse bloco
+                for(int b = i + 1; b < linhas; b++){ //navega só pela coluna que esta esse elemento
+                    if (a[b][j] == 0){ //se for igual a 0 mostra essa mensagem
                         printf("escalonado matriz pivo a%d,%d nenhuma alteração feita na linha %d\n", i , j, b);
                     }
                 }
