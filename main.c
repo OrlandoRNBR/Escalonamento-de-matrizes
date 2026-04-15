@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-void receber_matriz(int linhas, int colunas,float a [linhas][colunas]){
+void receber_matriz(int linhas, int colunas,float a [linhas][colunas]){ //recebe uma matriz 
     for(int i = 0; i < linhas; i++){
         //printf("Looping em: %d\n", j); ta aqui por conta de um erro de logica
         for(int j = 0; j < colunas; j++){
@@ -14,46 +14,61 @@ void receber_matriz(int linhas, int colunas,float a [linhas][colunas]){
     }
 }
 
-void printar_matriz(int linhas, int colunas,float a [linhas][colunas]){
+void printar_matriz(int linhas, int colunas,float a [linhas][colunas]){//mostra a matriz na tela
    for(int i = 0; i < linhas; i++){
         for(int j = 0; j < colunas; j++){
-            printf("%g  ", a[i][j]);
+            printf("%g  ", a[i][j]); //printa uma elemento especificamente uma linha
         }
-        printf("\n");
+        puts("|"); // pula a linha.
     }
 }
 
-int verify_null(int linhas, int colunas,float a [linhas][colunas]){
+int verify_null(int linhas, int colunas,float a [linhas][colunas]){ //verifica se a matriz é nula
 int matriz_nula = 0; //variavel controle que se falsa essa matriz é uma matriz nula.
-    for(int i = 0; i < linhas; i++){
+    for(int i = 0; i < linhas; i++){ 
         for(int j = 0; j < colunas; j++){
             if(a[0][0] == 0 && a[0][0] == a[i][j]) matriz_nula = 1;
              //verificação verifica se a11 é igual a 0 e se todos os itens são iguais a a logo todos os itens são iguais 0
+             else matriz_nula = 0;
         }
     }
     return matriz_nula;
 }
 
-void troca_linha(int linhas ,float a [linhas], float b[linhas]){
-    float temp;
-    for(int i = 0; i < linhas; i++){
-        temp = a[i];
+void troca_linha(int linhas ,float a [linhas], float b[linhas]){ //troca as linhas da matriz de lugar
+    float temp; //variavel temporaria
+    for(int i = 0; i < linhas; i++){ //looping que troca elemento por elemento da matriz
+        temp = a[i]; 
         a[i] = b[i];
         b[i] = temp;
     }
 }
 
-void mul_linha(int linhas,float a[linhas], float k){
+void pivo_sub (int colunas,float l1[colunas],float l2[colunas], int indice_pivo){
+    float pivo = l2[indice_pivo]/l1[indice_pivo]; //escalar que multilica a linha
+    for(int i = 0; i < colunas; i++)  l2[i] = l2[i] - (pivo*l1[i]); // looping que faz a operação de multiplicação e subtração
+    
+}
+
+
+void mul_linha(int linhas,float a[linhas], float k){ //multiplica a linha inteira por um escalar
     for(int i = 0; i< linhas; i++){
         a[i] = a[i]*k;
     }
 }
 
-void sub_linha(int linhas ,float a [linhas], float b[linhas]){
-    for(int i = 0; i < linhas; i++){
+void sub_linha(int linhas ,float a [linhas], float b[linhas]){ //subtrai uma linha de outra
+    for(int i = 0; i < linhas; i++){ // subtrai item por item da linha e armazena na prineira
         a[i] = a[i] - b[i];
     }
 }
+
+void add_linha(int linhas ,float a [linhas], float b[linhas]){ //soma uma linha de outra
+    for(int i = 0; i < linhas; i++){ // soma item por item da linha e armazena na prineira
+        a[i] = a[i] + b[i];
+    }
+}
+
 
 int main (void){
     unsigned int colunas = 1, linhas = 1;
@@ -69,7 +84,7 @@ int main (void){
     scanf("%d", &colunas);
     printf("\n");
     
-    puts("Digite os elementos da matriz!");
+    puts("Digite os elementos da matriz!\n");
     float a[linhas][colunas]; //declaração da matriz
     /*Recebe os elementos da matriz em um looping*/
     receber_matriz(linhas, colunas, a);
@@ -81,31 +96,32 @@ int main (void){
     int matriz_nula = verify_null (linhas, colunas, a); //variavel controle que se falsa essa matriz é uma matriz nula.
   
     if (matriz_nula == 1){ //retorna para o usuario que a matriz é nula.
-        printf("Essa matriz é nula!\nE não pode ser escalonada.");
+        printf("Essa matriz é nula!\nE não pode ser escalonada.\n");
         return 0;
     }
 
-    int controle = 0;//variavel de controle para caso a primeira coluna seja completamente 0
-    if(a[0][0] == 0){ // se a [0][0] = 0  ele procura uma linha q seja diferente de 0 para trocar
-        for (int i = 1; i < linhas; i++){ //navega pela coluna
-            if (a[i][0] !=0 ){ // se achar um elemento diferente de 0 troca as linhas
-                troca_linha(linhas, a[i], a[0]);  //troca as linhas.
-            }  else if (a[0][0] == 0 && a[i][0] == a[0][0]) controle++; // se não achar a primera coluna inteira é 0 essa varivel vai ser usada para 
+    int j = 0;
+    for (int i  = 0; i < linhas; i++){ // looping para escalonar a matriz
+        int controle = 0;//variavel de controle para caso a primeira coluna seja completamente 0
+        if(a[0][0] == 0){ // se a [0][0] = 0  ele procura uma linha q seja diferente de 0 para trocar
+            puts("Elemento a[0][0] = a 0 execultando troca de linha!");
+            for (int i = 1; i < linhas; i++){ //navega pela coluna
+                if (a[i][0] !=0 ){ // se achar um elemento diferente de 0 troca as linhas
+                    troca_linha(linhas, a[i], a[0]);  //troca as linhas.
+                }else if (a[0][0] == 0 && a[i][0] == a[0][0]) controle++; // se não achar a primera coluna inteira é 0 essa varivel vai ser usada para 
                                                                                                             //somar nas proxima alaterações para ele não mecher nessa coluna.
-        }
-    }
-    //verficação da matriz
-    for (int i = 0; i   < linhas; i++){//navega pelas linhas
-        for(int j = 0; j < colunas; j++){ //navega pelas colunas
-            if(i == j){ // se ele estiver olhando para o elemento da diagonal principal A mn ele execulta esse bloco
-                for(int b = i + 1; b < linhas; b++){ //navega só pela coluna que esta esse elemento
-                    if (a[b][j] == 0){ //se for igual a 0 mostra essa mensagem
-                        printf("escalonado matriz pivo a%d,%d nenhuma alteração feita na linha %d\n", i , j, b);
-                    }
-                }
             }
         }
+    
+        for (int b = i +1; b < linhas; b++) //navega pela linha do pivo
+            if(a[b][j] != 0) // se o elemento for diferente de zero faz a operação
+                pivo_sub(colunas, a[i], a[b], i);//faz aoperação elementar
+        
+            j++;
     }
+
+    puts("#matriz escalonada#");
+    printar_matriz(linhas, colunas, a);
 
 }
 
@@ -113,7 +129,7 @@ int main (void){
 
 
 
-
+/*#ERROS DE LOGICA #*/
    /*
  int matriz_escalonada = 0, matriz_escalonada_vetor = 0;
 
@@ -148,12 +164,6 @@ esse bolo de for e if verifica se a matriz esta escalonada
 */
 
 
-
-
-
-
-
-
  /*
  tava na linha 71
  
@@ -171,3 +181,29 @@ esse bolo de for e if verifica se a matriz esta escalonada
     1 1 1 1
     1 0 1 1
     1 0 0 1 essa matriz foi verificada como escalonada*/
+
+    /*
+    for (int i = 0; i   < linhas; i++){//navega pelas linhas
+        for(int j = 0; j < colunas; j++){ //navega pelas colunas
+            
+            
+            
+            if(i == j){ // se ele estiver olhando para o elemento da diagonal principal A mn ele execulta esse bloco
+                
+               /* float v_temp[linhas];
+               for (int c = 0; c < linhas; c++) v_temp[c] = a[i][c];
+                for (int c = 0; c < linhas; c++) printf("%g",v_temp[c]);
+                printf("\n");*/
+/*
+                for(int b = i + 1; b < linhas; b++){ //navega só pela coluna que esta esse elemento
+                    if (a[b][j] == 0 && i != j){ //se for igual a 0 mostra essa mensagem
+                        printf("escalonando matriz: pivo a[%d][%d]\nnenhuma alteração feita na linha %d\n", i , j, b);
+                    } else{
+                        printf("Escalonando matriz: pivo a[%d][%d]\nEscalonado linha do elemento a[%d][%d]\n", a[b][j]);
+                            pivo_sub(colunas, a[i], a[b], b);
+                        printar_matriz(linhas, colunas, a);
+                    }
+                }
+            }
+        }
+    }*/
